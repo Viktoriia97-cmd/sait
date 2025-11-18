@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <title>Визитка - Векшиной Виктории</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="style1.css">
 </head>
 <body>
     <div class="main">
@@ -12,6 +12,91 @@
             <h1>Векшина Виктория</h1>
         </div>
     </div>
-    <a href="hhh.html" class="big-link"> Основная информация </a>
+    
+    <a href="hhh.html" class="big-link">Основная информация</a>
+    
+    <div class="feedback-form">
+        <h2>Форма обратной связи</h2>
+        <form id="feedbackForm">
+            <div class="form-group">
+                <label for="name">Имя:</label>
+                <input type="text" id="name" name="name">
+                <div class="error" id="nameError"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email">
+                <div class="error" id="emailError"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="comment">Комментарий:</label>
+                <textarea id="comment" name="comment" rows="4"></textarea>
+                <div class="error" id="commentError"></div>
+            </div>
+            
+            <button type="submit">Отправить</button>
+        </form>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('feedbackForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Получаем значения полей
+            const name = document.getElementById('name').value.trim();
+const email = document.getElementById('email').value.trim();
+            const comment = document.getElementById('comment').value.trim();
+            
+            // Очищаем предыдущие ошибки
+            document.getElementById('nameError').textContent = '';
+            document.getElementById('emailError').textContent = '';
+            document.getElementById('commentError').textContent = '';
+            document.getElementById('result').innerHTML = '';
+            
+            let isValid = true;
+            
+            // Проверка имени
+            if (name === '') {
+                document.getElementById('nameError').textContent = 'Пожалуйста, введите ваше имя';
+                isValid = false;
+            }
+            
+            // Проверка email
+            if (email === '') {
+                document.getElementById('emailError').textContent = 'Пожалуйста, введите email';
+                isValid = false;
+            } else if (!isValidEmail(email)) {
+                document.getElementById('emailError').textContent = 'Пожалуйста, введите корректный email';
+                isValid = false;
+            }
+            
+            // Проверка комментария
+            if (comment === '') {
+                document.getElementById('commentError').textContent = 'Пожалуйста, введите комментарий';
+                isValid = false;
+            }
+            
+            // Если все данные валидны
+            if (isValid) {
+                const resultElement = document.createElement('p');
+                resultElement.className = 'success';
+                resultElement.textContent = Спасибо, ${name}! Ваше сообщение отправлено. Мы свяжемся с вами по адресу ${email}.;
+                document.getElementById('result').appendChild(resultElement);
+                
+                // Очищаем форму
+                document.getElementById('feedbackForm').reset();
+            }
+        });
+        
+        // Функция проверки email
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+    </script>
 </body>
 </html>
